@@ -159,7 +159,7 @@ router.post('/reset_password_url/',async (req,res)=>{
 
     try {
 
-        const {_id} = await User.findOne({email:req.query.email});
+        const {_id} = await User.findOne({email:req.body.email});
         const id = _id.valueOf(); // this returns the string version of id
 
         const uid = mongoose.Types.ObjectId(id);
@@ -171,7 +171,7 @@ router.post('/reset_password_url/',async (req,res)=>{
         const resetPass_url = 'https://akshar-siksha.herokuapp.com/user/reset_password_page/'.concat(token);
     
         const subject = "Reset your Akshar password";
-        const recipent = req.query.email;
+        const recipent = req.body.email;
         send_email(subject,resetPass_url,recipent);
 
         res.status(200).send({status:200,message: "Password reset link has been sent to your registered email address"})

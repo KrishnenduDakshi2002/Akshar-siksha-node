@@ -29,6 +29,10 @@ app.set('view engine','ejs');
 
 // Importing ROUTES
 
+app.get('/',async (req,res)=>{
+    res.send({"Congratulation message":"Successfully deployed"});
+})
+
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());

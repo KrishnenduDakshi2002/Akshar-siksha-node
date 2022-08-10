@@ -30,7 +30,9 @@ app.set('view engine','ejs');
 // Importing ROUTES
 
 app.get('/',async (req,res)=>{
-    res.send({"Congratulation message":"Successfully deployed"});
+    res.send({"Congratulation message":"Successfully deployed our Node app",
+"Team message":"Hi, guys, this is our deployed node app. You will soon see your login functionality in the Akshar app",
+"Author":"krishnendu Dakshi"});
 })
 
 // Middleware

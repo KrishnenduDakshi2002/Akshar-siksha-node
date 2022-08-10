@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- Coding by CodingLab | www.codinglabweb.com-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--<title> Responsive Login and Signup Form </title>-->
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/resetPass.css" />
+
+    <!-- Boxicons CSS -->
+    <link
+      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section class="container forms">
+      <div class="form login">
+        <div class="form-content">
+          <header>Reset Password</header>
+          <form action="#">
+            <div class="field input-field">
+              <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                class="password"
+              />
+              <i class="bx bx-hide eye-icon"></i>
+            </div>
+
+            <div class="field input-field">
+              <input
+                id="password2"
+                type="password"
+                placeholder="Confirm Password"
+                class="password"
+              />
+              <i class="bx bx-hide eye-icon"></i>
+            </div>
+
+            <div class="field button-field">
+              <button onclick="sendData()">Confirm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- JavaScript -->
+    <script>
+      let user_id = "<%= user_id %>";
+      console.log(user_id);
+
+      
+    function sendData() {
+          
+        var pass1 = document.getElementById("password").value;
+        var pass2 = document.getElementById("password2").value;
+
+        if(pass1 == pass2){
+
+            fetch('http://127.0.0.1:3000/api/user/reset/password', {
+                method: 'PATCH',
+                body: JSON.stringify({
+                    password : pass1,
+                    password2 : pass2,
+                    id : user_id,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+                })
+                // .then((response) => response.json())
+                // .then((json) => console.log(json));
+                window.alert("Password Changed!");
+
+        }else{
+            window.alert("Password and confirm password should be same!!");
+        }
+      }
+    </script>
+    <script src="/js/resetPass.js"></script>
+  </body>
+</html>

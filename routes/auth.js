@@ -118,7 +118,7 @@ router.post('/login',async (req,res)=>{
     const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
 
     // Sending auth_token in response headers
-    res.header('auth_token',token).send(token);
+    res.json({"status":200,"auth_token":token,"id":user._id.valueOf(),"Name":user.name,"PhoneNumber":user.phoneNumber,"email":user.email});
 })
 
 

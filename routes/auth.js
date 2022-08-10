@@ -90,8 +90,10 @@ router.post('/register/:otp',async (req,res)=>{
                 const newStudent = await student.save();
             }
         );
+         // creating token 
+        const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
 
-        res.send({"status":201,"message":"User created"});
+        res.json({"status":201,"message":"User created","auth_token":token});
     }catch(err){
         res.status(400).send(err)
     }
@@ -162,13 +164,16 @@ router.post('/reset_password_url/',async (req,res)=>{
 
         const uid = mongoose.Types.ObjectId(id);
         const user  = await User.findOne({_id:uid});
+
+        // creating token 
+        const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
     
-        const resetPass_url = 'https://akshar-siksha.herokuapp.com/user/reset_password_page/'.concat(id);
+        const resetPass_url = 'https://akshar-siksha.herokuapp.com/user/reset_password_page/'.concat(token);
     
         const subject = "Reset your Akshar password";
         const recipent = req.query.email;
         send_email(subject,resetPass_url,recipent);
-        
+
         res.status(200).send({status:200,message: "Password reset link has been sent to your registered email address"})
         
         

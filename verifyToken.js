@@ -5,7 +5,7 @@ module.exports = function(req,res,next){
     if(!token) return res.status(401).send('Access denied');  // 401 Unauthorised
 
     try{
-        const verified = jwt.verify(token,process.env.TOKEN_SECRET); // this is output the user _id
+        const verified = jwt.verify(token,process.env.TOKEN_SECRET); // outputs the user _id
         req.user = verified;
         next();
     }catch(err){

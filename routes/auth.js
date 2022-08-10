@@ -18,6 +18,10 @@ const verify = require('../verifyToken');
 // TWILIO 
 const twilio_msg = require('../otp'); // this returns a function
 
+// EMAIL SENDER
+
+const send_email = require('../emailSender');
+
 // 4 DIGIT OTP GENERATION
 const otp_generated = Math.floor(1000 + Math.random() * 9000);
 
@@ -26,7 +30,6 @@ console.log(otp_generated);
 var CryptoJS = require("crypto-js");
 
 const { default: mongoose } = require('mongoose');
-const { AwsContext } = require('twilio/lib/rest/accounts/v1/credential/aws');
 
 
 
@@ -150,30 +153,29 @@ router.patch('/change/password',verify,async (req,res)=>{
 
 
 // Forgot password reset message
-router.post('/reset_password_url/:phone_number',async (req,res)=>{
+router.post('/reset_password_url/',async (req,res)=>{
 
     try {
 
-        const {_id} = await User.findOne({phoneNumber:req.params.phone_number});
+        const {_id} = await User.findOne({email:req.query.email});
         const id = _id.valueOf(); // this returns the string version of id
 
         const uid = mongoose.Types.ObjectId(id);
         const user  = await User.findOne({_id:uid});
-
-        console.log(user);
     
-        const resetPass_url = 'http://192.168.29.167:3000/user/reset_password_page/'.concat(id);
+        const resetPass_url = 'https://akshar-siksha.herokuapp.com/user/reset_password_page/'.concat(id);
     
-        console.log(resetPass_url);   // DEL AFTER DEV
-        twilio_msg(req.params.phone_number,resetPass_url);
-        res.status(200).send({status:200,message: "Password reset link has been sent to your registered mobile number"})
+        const subject = "Reset your Akshar password";
+        const recipent = req.query.email;
+        send_email(subject,resetPass_url,recipent);
+        
+        res.status(200).send({status:200,message: "Password reset link has been sent to your registered email address"})
+        
         
     } catch (error) {
-        res.status(400).send({status:400,ErrorMessage:"Not registered phone number"});
+        res.status(400).send({status:400,ErrorMessage:"Not registered email address"});
     }
 })
-
-
 
 
 // forgot pasword 

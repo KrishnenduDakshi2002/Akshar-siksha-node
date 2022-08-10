@@ -6,6 +6,7 @@ const cors = require('cors');
 require('dotenv/config');
 
 const path = require('path');
+const port = process.env.PORT || 3000;
 
 // Authentication route
 const authRoute = require('./routes/auth');
@@ -42,4 +43,4 @@ mongoose.connect(process.env.DB_CONNECTION,()=>{
 });
 
 // How do we start listening to the server
-app.listen(3000,()=>{console.log("Server running!")}) // portnumber
+app.listen(port,()=>{console.log("Server running!")}) // portnumber

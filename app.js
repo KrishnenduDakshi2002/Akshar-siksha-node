@@ -30,9 +30,12 @@ app.set('view engine','ejs');
 // Importing ROUTES
 
 app.get('/',async (req,res)=>{
-    res.send({"Congratulation message":"Successfully deployed our Node app",
-"Team message":"Hi, guys, this is our deployed node app. You will soon see your login functionality in the Akshar app",
-"Author":"krishnendu Dakshi"});
+    res.json({"Congratulation message":"Successfully deployed our Node app",
+            "Team message":"Hi, guys, this is our deployed node app. You will soon see your login functionality in the Akshar app",
+            "Author":"krishnendu Dakshi",
+            "Deployed at":"8.50 AM  10 August 2022",
+            "Members":['Ankesh Banerjee','Arjya Bhattacharjee','Sukanya Sadhukhan','Soumaydip Mondal','Rajarshi Roy','Krishnendu Dakshi'],
+            "Mentors":['Krishna Bose Dada','Shrabanti Mazumdar Didi']});
 })
 
 // Middleware

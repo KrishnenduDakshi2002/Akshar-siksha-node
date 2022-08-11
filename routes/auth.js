@@ -23,7 +23,8 @@ const twilio_msg = require('../otp'); // this returns a function
 const send_email = require('../emailSender');
 
 // 4 DIGIT OTP GENERATION
-const otp_generated = Math.floor(1000 + Math.random() * 9000);
+// const otp_generated = Math.floor(1000 + Math.random() * 9000);
+const otp_generated = 9099123;
 
 console.log(otp_generated);
 

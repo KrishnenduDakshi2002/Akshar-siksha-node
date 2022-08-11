@@ -75,9 +75,14 @@ router.post('/register/:otp',async (req,res)=>{
     // create a new user after validation is done
     const user = new User({
         _id : new mongoose.Types.ObjectId(),
-        name: req.body.name,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        role: req.body.role,
         email : req.body.email,
         phoneNumber : req.body.phoneNumber,
+        institute: req.body.institute,
+        intitute_code : req.body.intitute_code,
+        address:req.body.address,
         password: hashPassword
 
     });
@@ -87,12 +92,14 @@ router.post('/register/:otp',async (req,res)=>{
             async function(err){
                 if(err) return res.status(400);
 
-                const student = new Student({
-                    student_id: user._id
-                    // address : res.body.address
-                });
+                // CREATING REFERENCE TO STUDENT COLLECTION
+                if(req.body.role === 'STUDENT'){
 
-                const newStudent = await student.save();
+                    const student = new Student({
+                        student_id: user._id
+                    });
+                    const newStudent = await student.save();
+                }
             }
         );
          // creating token 
@@ -100,7 +107,7 @@ router.post('/register/:otp',async (req,res)=>{
 
         res.json({"status":201,"message":"User created","auth_token":token});
     }catch(err){
-        res.status(400).send(err)
+        res.status(400).json({"ErrorMessage":err})
     }
 });
 
@@ -128,7 +135,7 @@ router.post('/login',async (req,res)=>{
     const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
 
     // Sending auth_token in response headers
-    res.json({"status":200,"auth_token":token,"id":user._id.valueOf(),"Name":user.name,"PhoneNumber":user.phoneNumber,"email":user.email});
+    res.json({"status":200,"auth_token":token,"id":user._id.valueOf()});
 })
 
 

@@ -36,10 +36,15 @@ const { default: mongoose } = require('mongoose');
 
 //generating OTP when register is clicked after filling the registration form
 // it's front end developer's job to get the phone number and send a get request to this end point
-router.get('/otp/generate/:phone_number',async (req,res)=>{
-    twilio_msg(req.params.phone_number,
-        otp_generated);
-    res.status(201).send({"message":"OTP sent successful"});
+router.get('/otp/generate/',async (req,res)=>{
+    try {
+        twilio_msg(req.body.phone_number,
+            otp_generated);
+        res.status(201).json({"status":201,"message":"OTP sent successful"});
+        
+    } catch (error) {
+        res.json({"status":400,"ErrorMessage":"Invalid phone number"})
+    }
 })
 
 

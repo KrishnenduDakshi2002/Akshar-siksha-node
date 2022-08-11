@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
         type:Date,
         default:Date.now
     }
+    
 });
 
 // return mongoose.model('User',userSchema)

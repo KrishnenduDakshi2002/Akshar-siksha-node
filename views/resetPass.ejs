@@ -63,7 +63,7 @@
 
         if(pass1 == pass2){
 
-            fetch('http://127.0.0.1:3000/api/user/reset/password', {
+            fetch('https://akshar-siksha.herokuapp.com/api/user/reset/password', {
                 method: 'PATCH',
                 body: JSON.stringify({
                     password : pass1,
@@ -74,9 +74,9 @@
                     'Content-type': 'application/json; charset=UTF-8',
                 },
                 })
-                // .then((response) => response.json())
-                // .then((json) => console.log(json));
-                window.alert("Password Changed!");
+                
+
+                window.alert("Password Changed! You can close this window now.");
 
         }else{
             window.alert("Password and confirm password should be same!!");

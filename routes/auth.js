@@ -81,7 +81,7 @@ router.post('/register/:otp',async (req,res)=>{
         email : req.body.email,
         phoneNumber : req.body.phoneNumber,
         institute: req.body.institute,
-        intitute_code : req.body.intitute_code,
+        institute_code : req.body.institute_code,
         address:req.body.address,
         password: hashPassword
 
@@ -90,6 +90,7 @@ router.post('/register/:otp',async (req,res)=>{
 
         const newUser = await user.save(
             async function(err){
+                console.log("running save for user ");
                 if(err) return res.status(400);
 
                 // CREATING REFERENCE TO STUDENT COLLECTION

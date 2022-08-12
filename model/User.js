@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
         max:5,
         max:255
     },
-    intitute_code:{
+    institute_code:{
         type:String,
         required: true,
         max:3,

@@ -106,7 +106,7 @@ router.post('/register/:otp',async (req,res)=>{
          // creating token 
         const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
 
-        res.json({"status":201,"message":"User created","auth_token":token});
+        res.json({"status":201,"message":"User created","id":newUser._id.valueOf(),"auth_token":token});
     }catch(err){
         res.status(400).json({"ErrorMessage":err})
     }

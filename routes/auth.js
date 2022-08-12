@@ -21,6 +21,7 @@ const twilio_msg = require('../otp'); // this returns a function
 // EMAIL SENDER
 
 const send_email = require('../emailSender');
+const otp_email = require('../otp_email');
 
 // 4 DIGIT OTP GENERATION
 const otp_generated = Math.floor(1000 + Math.random() * 9000);
@@ -44,6 +45,17 @@ router.post('/otp/generate/',async (req,res)=>{
         
     } catch (error) {
         res.json({"status":400,"ErrorMessage":"Invalid phone number"})
+    }
+})
+
+router.post('/email/veification/',async (req,res)=>{
+    try {
+
+        otp_email("Verification code",otp_generated,req.body.email);
+        res.json({"status":200,"message":"OTP has been sent to your email"});
+        
+    } catch (error) {
+        res.json({"status":400,"ErrorMessage":"Invalid email address"})
     }
 })
 

@@ -215,7 +215,7 @@ router.patch('/reset/password',async (req,res)=>{
     // updating the password
     try{
         const updatedPass = await User.updateOne({_id:req_id},{$set:{password: hashPassword}});
-        // res.status(200).json(updatedPass);   ///    DEL AFTER DEV
+        res.status(200).json(updatedPass); 
     }catch(err){
         res.status(400);
     }

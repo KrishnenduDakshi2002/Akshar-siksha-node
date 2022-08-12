@@ -108,7 +108,7 @@ router.post('/register/:otp',async (req,res)=>{
 
         res.json({"status":201,"message":"User created","id":newUser._id.valueOf(),"auth_token":token});
     }catch(err){
-        res.status(400).json({"ErrorMessage":err})
+        res.status(400).json({"ErrorMessage":{"Message From":"Register router","error":err}})
     }
 });
 
@@ -187,11 +187,11 @@ router.post('/reset_password_url/',async (req,res)=>{
         const recipent = req.body.email;
         send_email(subject,resetPass_url,recipent);
 
-        res.status(200).send({status:200,message: "Password reset link has been sent to your registered email address"})
+        res.status(200).json({status:200,message: "Password reset link has been sent to your registered email address"})
         
         
     } catch (error) {
-        res.status(400).send({status:400,ErrorMessage:"Not registered email address"});
+        res.status(400).json({status:400,ErrorMessage:"Not registered email address"});
     }
 })
 

@@ -180,7 +180,7 @@ router.post('/reset_password_url/',async (req,res)=>{
 
         // creating token 
         const token = jwt.sign({_id:user._id},process.env.TOKEN_SECRET);
-    
+
         const resetPass_url = 'https://akshar-siksha.herokuapp.com/user/reset_password_page/'.concat(token);
     
         const subject = "Reset your Akshar password";

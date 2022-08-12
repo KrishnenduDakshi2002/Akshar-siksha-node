@@ -37,7 +37,8 @@ module.exports = function send_email(subject,body,recipent){
         subject:subject,
         template: 'emailTemplate',
         context :{
-            resetLink: body
+            resetLink: body    /// this is sending the generated reset password page url to the handlebars templete's
+            // button's href
         }
     };
 

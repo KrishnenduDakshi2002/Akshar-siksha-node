@@ -68,17 +68,17 @@ router.post('/email/veification/',async (req,res)=>{
 router.post('/register/:otp',async (req,res)=>{
     //validating otp
 
-    if(req.params.otp != otp_generated) return res.status(400).send({ErrorMessage:"OTP invalid"});
+    if(req.params.otp != otp_generated) return res.json({"status":400,"ErrorMessage":"OTP invalid"});
 
     // lets validate with schema
     const {error} = registerValidation(req.body);
-    if(error) return res.status(400).send({ErrorMessage:error.details[0].message});
+    if(error) return res.json({'ErrorMessage':error.details[0].message});
 
     //Checking if the user is already present in the database or not
     const emailExist = await User.findOne({email: req.body.email});
     //Checking if the user is already present in the database or not
     const phoneExist = await User.findOne({phoneNumber: req.body.phoneNumber});
-    if(phoneExist || emailExist) return res.status(400).send({ErrorMessage: 'Record is already present'});
+    if(phoneExist || emailExist) return res.json({"status":400,"ErrorMessage": "Record is already present"});
 
     // hashing the password
     const salt = await bcrypt.genSalt(10);
@@ -103,7 +103,7 @@ router.post('/register/:otp',async (req,res)=>{
         const newUser = await user.save(
             async function(err){
                 console.log("running save for user ");
-                if(err) return res.status(400);
+                if(err) return res.json({"status":400,'ErrorMessage': "Error creating refs"});
 
                 // CREATING REFERENCE TO STUDENT COLLECTION
                 if(req.body.role === 'STUDENT'){
@@ -120,7 +120,7 @@ router.post('/register/:otp',async (req,res)=>{
 
         res.json({"status":201,"auth_token":token});
     }catch(err){
-        res.status(400).json({"ErrorMessage":{"Message From":"Register router","error":err}})
+        res.json({"ErrorMessage":"Error while registering","status":400})
     }
 });
 
@@ -199,7 +199,7 @@ router.post('/reset_password_url/',async (req,res)=>{
         const recipent = req.body.email;
         send_email(subject,resetPass_url,recipent);
 
-        res.status(200).json({status:200,message: "Password reset link has been sent to your registered email address"})
+        res.status(200).json({status:200,ErrorMessage: "Password reset link has been sent to your registered email address"})
         
         
     } catch (error) {

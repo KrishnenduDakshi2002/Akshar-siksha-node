@@ -24,12 +24,11 @@ const ClassroomSchema = new mongoose.Schema({
     ],
     teachers: [
         {
-            Teacher_id : Teacher.Student_id,
-            First_name : Teacher.First_name,
-            Last_name : Teacher.Last_name,
-            Email : Teacher.Email,
-            Gender : Teacher.Gender
-            
+            Teacher_id : String,
+            First_name : String,
+            Last_name : String,
+            Email : String,
+            Gender : String,
         }
     ],
 

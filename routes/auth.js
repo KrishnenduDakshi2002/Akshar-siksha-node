@@ -2,6 +2,7 @@ const router = require('express').Router();
 //MODELS
 const User = require('../model/User');
 const Student = require('../model/Student');
+const Teacher = require('../model/Teacher');
 
 // VALIDATIONS WITH JOI
 const {registerValidation,loginValidation,changePassValidation} = require('../validation');
@@ -109,9 +110,16 @@ router.post('/register/:otp',async (req,res)=>{
                 if(req.body.role === 'STUDENT'){
 
                     const student = new Student({
-                        student_id: user._id
+                        Student_id: user._id
                     });
                     const newStudent = await student.save();
+                }
+                else if(req.body.role === 'TEACHER'){
+
+                    const teacher = new Teacher({
+                        Teacher_id: user._id
+                    });
+                    const newTeacher = await teacher.save();
                 }
             }
         );

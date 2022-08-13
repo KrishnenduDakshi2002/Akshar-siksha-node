@@ -1,15 +1,14 @@
 const mongoose = require('mongoose');
 const User = require('../model/User');
-const Classroom = require('../model/Classroom');
 
-const StudentSchema = new mongoose.Schema({
+const TeacherSchema = new mongoose.Schema({
 
 
-    Student_id:{
+    Teacher_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    
+
     First_name: String,
 
     Last_name : String,
@@ -24,15 +23,16 @@ const StudentSchema = new mongoose.Schema({
 
     Gurdian_name:String,
 
-    Classrooms : [
+    Classroom : [
         {
             type: mongoose.Types.ObjectId,
             ref: 'Classroom'
         }
     ],
 
+
 });
 
 
 
-module.exports =  mongoose.model('Student',StudentSchema);  // this module "User.js" will export mongoose model object
+module.exports =  mongoose.model('Teacher',TeacherSchema);  // this module "User.js" will export mongoose model object

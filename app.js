@@ -53,3 +53,7 @@ mongoose.connect(process.env.DB_CONNECTION,()=>{
 
 // How do we start listening to the server
 app.listen(port,()=>{console.log("Server running!")}) // portnumber
+
+
+
+// for website

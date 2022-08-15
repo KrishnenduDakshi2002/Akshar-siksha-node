@@ -1,18 +1,27 @@
 const mongoose = require('mongoose');
 const User = require('../model/User');
+const Teacher = require('../model/Teacher');
+const Course = require('../model/Course');
 
 const StudentSchema = new mongoose.Schema({
 
 
-    student_id:{
+    student_id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    address:{
-        type:String,
-        min:6,
-        max:255
-    }
+        ref: "User",
+      },
+      teachers: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Teacher",
+        },
+      ],
+      courses: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Course",
+        },
+      ],
 });
 
 

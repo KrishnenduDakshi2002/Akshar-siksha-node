@@ -19,7 +19,10 @@ const StudentSchema = new mongoose.Schema({
 
     Guardian_name:String,
 
-    Class : String,
+    Class : {
+        type : String,
+        default : ""
+    },
 
     Classrooms : [
         {

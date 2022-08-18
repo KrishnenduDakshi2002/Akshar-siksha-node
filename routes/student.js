@@ -39,17 +39,7 @@ router.get('/',verify, async (req,res)=>{
     ]
     console.log(student);
     if(student){
-        // const updated_student = (await (await student.populate('Student_id')).populate({
-        //     path: 'Classrooms',
-        //     populate :[
-        //     {
-        //         path:'Teachers',
-        //         populate : 'Teacher_id'
-        //     }
-            
-        //     ]
-        // }));
-
+        
         const updated_student = await student.populate(query);
         res.json({"status":200,"student":updated_student});
     }else{

@@ -9,26 +9,29 @@ const TeacherSchema = new mongoose.Schema({
         ref: 'User'
     },
 
-    First_name: String,
-
-    Last_name : String,
-
-    Email: String,
-
-    Date_of_join: Date ,
-
     Age: String,
 
     Gender: String,
 
-    Gurdian_name:String,
-
-    Classroom : [
+    Classrooms : [
         {
             type: mongoose.Types.ObjectId,
             ref: 'Classroom'
         }
     ],
+    NoticeBoard:[
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'Notice'
+        }
+
+    ],
+    Tests : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Test'   
+        }
+    ]
 
 
 });

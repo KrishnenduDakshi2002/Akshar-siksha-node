@@ -14,6 +14,20 @@ const authRoute = require('./routes/auth');
 // reset password page route
 const reset_pass_page_route = require('./routes/resetPass');
 
+// student dashboard route
+const student_dashboard_route = require('./routes/student');
+
+// teacher dashboard route
+const teacher_dashboard_route = require('./routes/teacher');
+
+
+// classroom route
+
+const classroom_route = require('./routes/classroom');
+
+
+
+
 
 // Statics files
 app.use(express.static('public'));
@@ -43,6 +57,22 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/user',authRoute);
 app.use('/user/reset_password_page',reset_pass_page_route);
+app.use('/api/data/students',student_dashboard_route);
+app.use('/api/data/teachers',teacher_dashboard_route);
+app.use('/api/data/classroom',classroom_route);
+
+// serving static files
+// servering images
+app.get('/image/img/icon.png',async(req,res)=>{
+
+    res.download('public/img/icon.png');  // this will download the image
+})
+
+// pdf download
+app.get('/materials/',async(req,res)=>{
+
+    res.download('public/Materials/DataStructures.pdf');  // this will download the image
+})
 
 
 //Connect to db

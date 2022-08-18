@@ -1,28 +1,25 @@
 const mongoose = require('mongoose');
 const User = require('../model/User');
 const Classroom = require('../model/Classroom');
+const Notice = require('../model/NoticeBoard');
+const Evaluation = require('../model/Evaluation');
 
 const StudentSchema = new mongoose.Schema({
 
-
+// from this we are getting all the necessary details regarding this student stored in User model
+// while populating we will populate spefic fields
     Student_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     },
-    
-    First_name: String,
-
-    Last_name : String,
-
-    Email: String,
-
-    Date_of_join: Date ,
 
     Age: String,
 
     Gender: String,
 
-    Gurdian_name:String,
+    Guardian_name:String,
+
+    Class : String,
 
     Classrooms : [
         {
@@ -30,6 +27,25 @@ const StudentSchema = new mongoose.Schema({
             ref: 'Classroom'
         }
     ],
+    NoticeBoard:[
+        {
+            type: mongoose.Types.ObjectId,
+            ref: 'Notice'
+        }
+
+    ],
+    Evaluation:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Evaluation'   
+        }
+    ,
+    Tests : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Test'   
+        }
+    ]
 
 });
 

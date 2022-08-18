@@ -13,15 +13,24 @@ const StudentSchema = new mongoose.Schema({
         ref: 'User'
     },
 
-    Age: String,
+    Age: {
+        type: String,
+        default : 'N/A'
+    },
 
-    Gender: String,
+    Gender: {
+        type : String,
+        default : 'N/A'
+    },
 
-    Guardian_name:String,
+    Guardian_name:{
+        type: String,
+        default : 'N/A'
+    },
 
     Class : {
         type : String,
-        default : ""
+        default : 'N/A'
     },
 
     Classrooms : [

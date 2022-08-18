@@ -9,9 +9,15 @@ const TeacherSchema = new mongoose.Schema({
         ref: 'User'
     },
 
-    Age: String,
+    Age:{
+        type: String,
+        default : 'N/A'
+    },
 
-    Gender: String,
+    Gender: {
+        type : String,
+        default : 'N/A'
+    },
 
     Classrooms : [
         {

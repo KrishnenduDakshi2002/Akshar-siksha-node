@@ -6,7 +6,7 @@ const  EvaluationSchema= mongoose.Schema({
     Challenges : [
         {
             type: mongoose.Types.ObjectId,
-            ref : 'Challenge'
+            ref : 'Challenges'
     
         }
     ],
@@ -14,7 +14,7 @@ const  EvaluationSchema= mongoose.Schema({
     Achievements : [
         {
             type: mongoose.Types.ObjectId,
-            ref : 'Achievement'
+            ref : 'Achievements'
         }
     ]
 })

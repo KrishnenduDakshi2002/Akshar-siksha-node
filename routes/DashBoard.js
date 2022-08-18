@@ -22,14 +22,10 @@ router.get('/',verify, async (req,res)=>{
         },
         {
             path : 'Student_id',
-            select : 'first_name last_name role age email phoneNumber institute'
+            select : 'first_name last_name role age email phoneNumber institute address'
         },
         {
             path : 'NoticeBoard'
-            
-        },
-        {
-            path : 'Evaluation'
             
         },
         {
@@ -51,7 +47,6 @@ router.get('/',verify, async (req,res)=>{
             path : 'NoticeBoard'
             
         },
-
         {
             path : 'Tests'
         }

@@ -364,9 +364,21 @@ router.get('/get/classroom/details/:classroom_id', async(req,res)=>{
     const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
     const classroom = await Classroom.findOne({_id:classroom_id});
 
+    var start = new Date();
+    start.setUTCHours(0,0,0,0); // this give the start of a day 
+
+    var end = new Date();
+    end.setUTCHours(23,59,59,999);  // this give the end of a day
+
+
     const query = [
         {
-            path : 'Classes'
+            path : 'Classes',
+            match :{
+                'dateTime':{
+                    $gte : start
+                }
+            }
         },
         {
             path : 'Discussion'

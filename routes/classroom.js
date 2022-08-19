@@ -106,47 +106,6 @@ router.post('/',verify,async (req,res)=>{
 //// *************************************************************** DELETE A CLASSROOM  *******************************************************************
 
 
-router.delete('/delete/:classroom_id',verify, async(req,res)=>{
-
-    const teacher_id = req.user._id;
-    const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
-    const classroom = await Classroom.findOne({_id: classroom_id , Teachers :[teacher_id]})
-
-    if(classroom){
-        
-        try {
-            await Student.updateMany({
-                Classrooms : [classroom_id]   // students who have classroom_id in their classroom array will be selected
-            }, 
-            {
-                $pull :{
-                    Classrooms : classroom_id
-                }
-            })
-
-            await Teacher.updateMany({
-                Classrooms : [classroom_id]   // teachers who have classroom_id in their classroom array will be selected
-            }, 
-            {
-                $pull :{
-                    Classrooms : classroom_id
-                }
-            })
-
-            // now finally deleting the classroom from database
-            const del_res = await classroom.deleteOne({_id:classroom_id});
-            res.json({"status":200,"message":"Classroom deleted successfully","delete_response":del_res});
-            
-        } catch (error) {
-            res.json({"status":400});
-        }
-    }else{
-        res.json({"status":400});
-    }
-
-
-})
-
 
 //// *************************************************************** ADD MEMBERS TO A CLASSROOM  *******************************************************************
 

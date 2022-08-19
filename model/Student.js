@@ -57,6 +57,12 @@ const StudentSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Test'   
         }
+    ],
+    PinnedClasses : [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Class'   
+        }
     ]
 
 });

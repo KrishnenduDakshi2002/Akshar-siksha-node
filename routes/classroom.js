@@ -137,10 +137,10 @@ router.delete('/delete/:classroom_id',verify, async(req,res)=>{
             res.json({"status":200,"message":"Classroom deleted successfully","delete_response":del_res});
             
         } catch (error) {
-            res.json({"status":400});
+            res.json({"status":400,"message":"from catchin error"});
         }
     }else{
-        res.json({"status":400});
+        res.json({"status":400,"message":"classroom or teacher doesn't exists"});
     }
 
 

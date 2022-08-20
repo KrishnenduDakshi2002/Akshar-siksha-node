@@ -54,7 +54,7 @@ router.post("/create/class",verify,async (req,res)=>{
             }
         })
 
-        res.json({'status':201,'class_id':newClass._id.valueOf()});
+        res.json({'status':201,'class_id':newClass._id.valueOf(),"res":req.body,"createClass":newClass});
     }else{
         res.json({"ErrorMessage":400});
     }
@@ -519,6 +519,12 @@ router.get('/get/refresh/:refresh_mode/:classroom_id', async(req,res)=>{
 
     var start = moment().startOf('day').utc(true).toDate();
     var end = moment().endOf('day').utc(true).toDate();
+
+    var date = moment('2022-08-20T15:00:46+05:30').utc(true).toDate();
+
+    console.log(start);
+    console.log(end);
+    console.log(date);
     
     if(refresh_mode === 'today_class'){
         populate_query = {

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const moment = require('moment')
 
 
 const userSchema = new mongoose.Schema({
@@ -60,7 +60,7 @@ const userSchema = new mongoose.Schema({
     },
     date_created:{
         type:Date,
-        default:Date.now
+        default:moment().utc(true).toDate()   // this will store the local time ( as date obj)
     }
     
 });

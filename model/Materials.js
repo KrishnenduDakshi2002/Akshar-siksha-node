@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Class = require("../model/Class");
+const moment = require('moment')
 
 const MaterialSchema = mongoose.Schema({
     topic: String,
@@ -9,7 +10,7 @@ const MaterialSchema = mongoose.Schema({
     },
     dateTime:{
         type: Date,
-        default : Date.now
+        default : moment().utc(true).toDate()   // this will store the local time ( as date obj)
     },
     link : String
 })

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment')
 
 
 const DiscussionSchema = mongoose.Schema({
@@ -7,6 +8,10 @@ const DiscussionSchema = mongoose.Schema({
     },
     topic: String,
     question : String,
+    created_at:{
+        type: Date,
+        default : moment().utc(true).toDate()   // this will store the local time ( as date obj)
+    },
     answers : [
         {
             sender : String,

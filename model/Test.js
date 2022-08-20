@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
+const moment = require('moment')
+
 
 const TestSchema = mongoose.Schema({
     topic: String,
     subject: String,
     dateTime : {
         type: Date,
-        default : Date.now
+        default : moment().utc(true).toDate()   // this will store the local time ( as date obj)
     },
     questionPaper : String,  // this will be provided by a teacher // this will a firebase link for the question paper
     answerSheet : [

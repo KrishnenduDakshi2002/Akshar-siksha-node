@@ -6,6 +6,7 @@ const Class = require('../model/Class');
 const Evaluation = require('../model/Evaluation');
 const Material = require('../model/Materials');
 const Discussion = require('../model/Discussion');
+const moment = require('moment')
 
 const ClassroomSchema = new mongoose.Schema({
 
@@ -16,7 +17,7 @@ const ClassroomSchema = new mongoose.Schema({
     // all the studuents that are enrolled in a classroom
     created_at: {
         type: Date,
-        default : Date.now
+        default : moment().utc(true).toDate()   // this will store the local time ( as date obj)
     },
     Students:[
         {

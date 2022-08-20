@@ -80,8 +80,7 @@ router.post('/post/class/:classroom_id',verify, async (req,res)=>{
                 Classes : new_Class._id
             }
         })
-
-        res.json({"status":201,"class":newClass,"req":req.body})
+        res.json({"status":201})
     }else{
         res.json({"status":400});
     }

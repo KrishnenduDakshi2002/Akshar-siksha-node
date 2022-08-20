@@ -32,7 +32,7 @@ app.set('view engine','ejs');
 app.get('/',async (req,res)=>{
     res.json({"Congratulation message":"Successfully deployed our Node app",
             "Team message":"Hi, guys, this is our deployed node app. You will soon see your login functionality in the Akshar app",
-            "Author":"krishnendu Dakshi",
+            "Author":"du Dakshi",
             "Deployed at":"8.50 AM  10 August 2022",
             "Members":['Ankesh Banerjee','Arjya Bhattacharjee','Sukanya Sadhukhan','Soumaydip Mondal','Rajarshi Roy','Krishnendu Dakshi'],
             "Mentors":['Krishna Bose Dada','Shrabanti Mazumdar Didi']});
@@ -56,4 +56,17 @@ app.listen(port,()=>{console.log("Server running!")}) // portnumber
 
 
 
-// for website
+// FOR WEBSITE
+
+
+// Static files for website
+
+app.use('/css',express.static(__dirname + 'public/css_web'))
+app.use('/js',express.static(__dirname + 'public/js_web'))
+app.use('/img',express.static(__dirname + 'public/imgages_web'))
+
+// Set views for website
+
+app.set('views',path.join(__dirname,'views/views_web'));
+app.set('view engine','ejs');
+

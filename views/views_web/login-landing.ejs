@@ -4,34 +4,53 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <meta
+      name="google-signin-client_id"
+      content="546308796336-oa4hj65hm1n2e1orutq07a2jb6ac6h39.apps.googleusercontent.com"
+    />
+
     <link
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v4.0.0/css/line.css"
     />
 
     <!-- ===== CSS ===== -->
-    <link rel="stylesheet" href="../../public/css_web/login-landing.css" />
+    <link rel="stylesheet" href="css_web/login-landing.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
     />
     <title>Document</title>
-    <link rel="icon" href="../../public/images_web/favicon.ico" />
+    <link rel="icon" href="img_web/favicon.ico" />
+    <style>
+      .error-msg {
+        font-size: 20px;
+        color: rgb(135, 33, 33);
+        margin-top: 4px;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
       <div class="forms">
         <div class="form login">
           <span class="title">Login</span>
-
-          <form action="/login-landing" method="post">
+          <!-- form -->
+          <form action="/user/login" method="post">
             <div class="input-field">
-              <input type="text" placeholder="Enter your email" required />
+              <input
+                type="text"
+                name="email"
+                placeholder="Enter your email"
+                required
+              />
               <i class="uil uil-envelope icon"></i>
             </div>
             <div class="input-field">
               <input
                 type="password"
+                name="password"
                 class="password"
                 placeholder="Enter your password"
                 required
@@ -39,6 +58,7 @@
               <i class="uil uil-lock icon"></i>
               <i class="uil uil-eye-slash showHidePw"></i>
             </div>
+            <div class="error-msg"><%= msg %></div>
 
             <div class="checkbox-text">
               <div class="checkbox-content">
@@ -49,11 +69,11 @@
               <a href="#" class="text">Forgot password?</a>
             </div>
 
-            <a href="landing-home-post-login.html">
-              <div class="input-field button">
-                <input type="button" value="Login" />
-              </div>
-            </a>
+            <!-- <a href="landing-home-post-login.html"> -->
+            <div class="input-field button">
+              <input type="submit" value="Login" />
+            </div>
+            <!-- </a> -->
             <div class="or-line">
               <hr class="underline" />
               <div class="or">or</div>
@@ -61,28 +81,30 @@
             </div>
             <div class="or-login">Login with your social media account</div>
             <div class="login-icons">
-              <button class="btn-g" type="submit">
-                <a href="#"> <span class="google-icon">G</span></a>
-              </button>
-              <button class="btn-1" type="submit">
-                <a href="#"
+              <div class="btn-g" type="submit">
+                <a href="/login/google"> <span class="google-icon">G</span></a>
+              </div>
+              <div class="btn-1" type="submit">
+                <a href="/login/facebook"
                   ><span class="icons"
                     ><i class="fa-brands fa-facebook-f fa-xl"></i></span
                 ></a>
-              </button>
-              <button class="btn-1" type="submit">
-                <a href="#"
+              </div>
+              <div class="btn-1" type="submit">
+                <a href="/login/twitter"
                   ><span class="icons"
                     ><i class="fa-brands fa-twitter fa-xl"></i></span
                 ></a>
-              </button>
+              </div>
             </div>
           </form>
 
           <div class="login-signup">
             <span class="text"
               >Don't have an account?
-              <a href="/registration" class="text signup-link">Register Now</a>
+              <a href="/user/registration" class="text signup-link"
+                >Register Now</a
+              >
             </span>
           </div>
         </div>

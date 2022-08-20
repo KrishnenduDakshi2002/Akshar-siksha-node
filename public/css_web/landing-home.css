@@ -113,6 +113,7 @@ main {
 
 .landing-nav-btn{
   padding: 10px;
+  display: block;
   background-color: transparent;
   border-radius: 5px;
   border: 2px solid white;

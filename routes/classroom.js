@@ -59,6 +59,33 @@ router.post("/create/class",verify,async (req,res)=>{
 
 })
 
+//// *************************************************************** NEW ENDPOINT FOR CREATE CLASS IN CLASSROOM *******************************************************************
+
+router.post('/post/class/:classroom_id',verify, async (req,res)=>{
+    const teacher_id = req.user._id;
+    const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
+    const classroom = Classroom.findOne({_id: classroom_id, Teachers:[teacher_id]});
+
+    if(classroom){
+        const class_create = new Class({
+            topic : req.body.topic,
+            subject : req.body.subject,
+            teacher: req.body.teacher,
+            dateTime: new Date(req.body.dateTime)
+        });
+
+        const new_Class = await class_create.save();
+        const updated_classroom = await Classroom.findByIdAndUpdate(classroom_id,{
+            $addToSet : {
+                Classes : new_Class._id
+            }
+        })
+
+        res.json({"status":201,"class":newClass,"req":req.body})
+    }else{
+        res.json({"status":400});
+    }
+})
 
 //// *************************************************************** CREATE CLASSROOM  *******************************************************************
 

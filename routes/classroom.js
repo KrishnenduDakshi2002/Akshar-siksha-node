@@ -82,10 +82,12 @@ router.post('/post/class/:classroom_id',verify, async (req,res)=>{
     //     })
 
 
-        res.json({"status":201,"classroom":classroom});
-    }else{
-        res.json({"status":400});
-    }
+    //     res.json({"status":201,"classroom":classroom});
+    // }else{
+    //     res.json({"status":400});
+    // }
+
+    res.json({"classroom":classroom});
 })
 
 //// *************************************************************** CREATE CLASSROOM  *******************************************************************

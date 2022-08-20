@@ -8,6 +8,7 @@ const Category = require('../model/Category');
 router.get('/search', async(req,res)=>{
     const category_id = mongoose.Types.ObjectId(req.query.category_id);
     let priceQuery = {};
+    let searchQuery = {};
     if(req.query.isFree){
         priceQuery  = {
             $match :{
@@ -16,17 +17,16 @@ router.get('/search', async(req,res)=>{
                 }
             }
         }
-    }
-    else{
-        priceQuery = {
+    } else priceQuery = { $match: {_id: {$ne: null}}};
+    
+    if(req.query.search){
+        searchQuery  = {
             $match :{
-                price:{
-                    $gt : 0
-                }
+                title : new RegExp(req.query.search, 'i')
             }
         }
-    }
-
+    } else searchQuery = { $match: {_id: {$ne: null}}};
+    
         const response = await Contribution.aggregate([
             {
                 $geoNear: {
@@ -46,6 +46,7 @@ router.get('/search', async(req,res)=>{
                     spherical: true
                 }
             },
+            searchQuery,
             priceQuery,
             {
                 $match:{
@@ -76,7 +77,8 @@ router.post('/add/contribution', verify, async (req,res)=>{
             description : req.body.description,
             user : user_id,
             price : parseFloat(req.body.price),
-            location : req.body.location
+            location : req.body.location,
+            date : req.body.date ? new Date(req.body.date) : null
         });
     
         const newContribution = await contribution.save();
@@ -90,6 +92,8 @@ router.post('/add/contribution', verify, async (req,res)=>{
     
 
 })
+
+
 
 
 module.exports = router;

@@ -31,21 +31,26 @@ router.post('/post/class/:classroom_id',verify, async (req,res)=>{
     const classroom = await Classroom.findOne({_id: classroom_id, Teachers:[teacher._id]});
 
     if(classroom){
-        const class_create = new Class({
-            topic : req.body.topic,
-            subject : req.body.subject,
-            teacher: req.body.teacher,
-            dateTime: new Date(req.body.dateTime)
-        });
-
-        const new_Class = await class_create.save();
-        const updated_classroom = await Classroom.findByIdAndUpdate(classroom_id,{
-            $addToSet : {
-                Classes : new_Class._id
-            }
-        })
-
-        res.json({"status":201,"class_id":new_Class._id});
+        try {
+            const class_create = new Class({
+                topic : req.body.topic,
+                subject : req.body.subject,
+                teacher: req.body.teacher,
+                dateTime: new Date(req.body.dateTime)
+            });
+    
+            const new_Class = await class_create.save();
+            await classroom.update({
+                $addToSet : {
+                    Classes : new_Class._id
+                }
+            })
+    
+            res.json({"status":201,"class_id":new_Class._id});
+            
+        } catch (error) {
+            res.json({"ErrorMessage":error})
+        }
     }else{
         res.json({"status":400});
     }

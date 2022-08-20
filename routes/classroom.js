@@ -34,7 +34,7 @@ require('dotenv/config');
 router.post("/create/class",verify,async (req,res)=>{
 
     const teacher_id = req.user._id;
-    const teacher = Teacher.findOne({_id:teacher_id});
+    const teacher = Teacher.findOne({Teacher_id:teacher_id});
 
     const classroom_id = mongoose.Types.ObjectId(req.body.classroom_id);
 
@@ -60,6 +60,8 @@ router.post("/create/class",verify,async (req,res)=>{
     }
 
 })
+
+
 
 
 //// *************************************************************** CREATE CLASSROOM  *******************************************************************

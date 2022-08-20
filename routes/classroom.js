@@ -43,7 +43,7 @@ router.post("/create/class",verify,async (req,res)=>{
             topic: req.body.topic,
             subject: req.body.subject,
             teacher : req.body.teacher,
-            dateTime: moment(req.body.dateTime).utc(true).toDate()
+            dateTime: new Date(req.body.dateTime)
         })
         const newClass = await class_name.save();
 
@@ -54,7 +54,7 @@ router.post("/create/class",verify,async (req,res)=>{
             }
         })
 
-        res.json({'status':201,'class_id':newClass._id.valueOf(),"res":req.body,"createClass":newClass});
+        res.json({'status':201,'class_id':newClass._id.valueOf(),"req":req.body,"createClass":newClass});
     }else{
         res.json({"ErrorMessage":400});
     }

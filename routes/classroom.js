@@ -66,21 +66,23 @@ router.post('/post/class/:classroom_id',verify, async (req,res)=>{
     const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
     const classroom = Classroom.findOne({_id: classroom_id, Teachers:[teacher_id]});
 
-    if(classroom){
-        const class_create = new Class({
-            topic : req.body.topic,
-            subject : req.body.subject,
-            teacher: req.body.teacher,
-            dateTime: new Date(req.body.dateTime)
-        });
+    // if(classroom){
+    //     const class_create = new Class({
+    //         topic : req.body.topic,
+    //         subject : req.body.subject,
+    //         teacher: req.body.teacher,
+    //         dateTime: new Date(req.body.dateTime)
+    //     });
 
-        const new_Class = await class_create.save();
-        const updated_classroom = await Classroom.findByIdAndUpdate(classroom_id,{
-            $addToSet : {
-                Classes : new_Class._id
-            }
-        })
-        res.json({"status":201})
+    //     const new_Class = await class_create.save();
+    //     const updated_classroom = await Classroom.findByIdAndUpdate(classroom_id,{
+    //         $addToSet : {
+    //             Classes : new_Class._id
+    //         }
+    //     })
+
+
+        res.json({"status":201,"classroom":classroom});
     }else{
         res.json({"status":400});
     }

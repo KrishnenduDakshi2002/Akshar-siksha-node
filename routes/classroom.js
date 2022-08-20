@@ -22,72 +22,33 @@ require('dotenv/config');
 
 
 
-//// *************************************************************** CREATE CLASS IN CLASSROOM *******************************************************************
-
-
-// as authentication it takes JWT in request headers
-
-// A teacher will create a class under a particular classroom
-// classroom_id : ---> body (req)
-router.post("/create/class",verify,async (req,res)=>{
-
-    const teacher_id = req.user._id;
-    const teacher = Teacher.findOne({Teacher_id:teacher_id});
-
-    const classroom_id = mongoose.Types.ObjectId(req.body.classroom_id);
-
-    if(teacher){
-        const class_name = new Class({
-            topic: req.body.topic,
-            subject: req.body.subject,
-            teacher : req.body.teacher,
-            dateTime: new Date(req.body.dateTime)
-        })
-        const newClass = await class_name.save();
-
-        // adding this class automatically to the classroom to belongs to 
-        await Classroom.findByIdAndUpdate(classroom_id,{
-            $addToSet : {
-                Classes : newClass._id
-            }
-        })
-
-        res.json({'status':201,'class_id':newClass._id.valueOf()});
-    }else{
-        res.json({"ErrorMessage":400});
-    }
-
-})
-
 //// *************************************************************** NEW ENDPOINT FOR CREATE CLASS IN CLASSROOM *******************************************************************
 
 router.post('/post/class/:classroom_id',verify, async (req,res)=>{
     const teacher_id = req.user._id;
+    const teacher = await Teacher.findOne({Teacher_id :  teacher_id});
     const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
-    const classroom = Classroom.findOne({_id: classroom_id, Teachers:[teacher_id]});
+    const classroom = await Classroom.findOne({_id: classroom_id, Teachers:[teacher._id]});
 
-    // if(classroom){
-    //     const class_create = new Class({
-    //         topic : req.body.topic,
-    //         subject : req.body.subject,
-    //         teacher: req.body.teacher,
-    //         dateTime: new Date(req.body.dateTime)
-    //     });
+    if(classroom){
+        const class_create = new Class({
+            topic : req.body.topic,
+            subject : req.body.subject,
+            teacher: req.body.teacher,
+            dateTime: new Date(req.body.dateTime)
+        });
 
-    //     const new_Class = await class_create.save();
-    //     const updated_classroom = await Classroom.findByIdAndUpdate(classroom_id,{
-    //         $addToSet : {
-    //             Classes : new_Class._id
-    //         }
-    //     })
+        const new_Class = await class_create.save();
+        const updated_classroom = await Classroom.findByIdAndUpdate(classroom_id,{
+            $addToSet : {
+                Classes : new_Class._id
+            }
+        })
 
-
-    //     res.json({"status":201,"classroom":classroom});
-    // }else{
-    //     res.json({"status":400});
-    // }
-
-    res.json({"classroom":classroom});
+        res.json({"status":201,"class_id":new_Class._id});
+    }else{
+        res.json({"status":400});
+    }
 })
 
 //// *************************************************************** CREATE CLASSROOM  *******************************************************************
@@ -244,55 +205,7 @@ router.post('/add/member',verify,async(req,res)=>{
 })
 
 
-//                                          $$$$$$$$$$$$$$$$$$  DON'T USE IT, USE THE CREATE CLASS $$$$$$$$$$$$$$$$$$$$$
-
-//// *************************************************************** ADD CLASS IN CLASSROOM *******************************************************************
-
-// ADD CLASS IN A CLASSROOM
-
-// purpose : Adding classes to classroom
-// jwt token for teacher who is adding classes --> headers
-// classroom id ---> body(req)
-// class id ---> body (req)
-router.post('/add/class',verify,async(req,res)=>{
-    const teacher_id = req.user._id;
-    const teacher = await User.findOne({_id:teacher_id});
-    const class_id = mongoose.Types.ObjectId(req.body.class_id);
-    const classroom_id  = mongoose.Types.ObjectId(req.body.classroom_id);
-
-    if(teacher){
-
-        const classroom = await Classroom.find({_id: classroom_id, Classes:{ $in : [class_id]}});
-
-        if(classroom.length){
-            res.json({"status":400,"ErrorMessage":"class is already added"});
-            return;
-        }
-        Classroom.findByIdAndUpdate(
-            classroom_id,
-            {
-                $addToSet:{
-                    Classes : class_id
-                }
-            },
-            function(err,data){
-                if(err) res.json({"ErrorMessage":"Error while enrolling class"});
-                else{
-                    res.json({"status":201,"results":data});
-                }
-            }
-        )
-    }else{
-        res.json({'status':400, 'ErrorMessage' : "Teacher doesn't exists"});
-    }
-})
-
-
-
-
 //// *************************************************************** ADD DISCUSSION TO A CLASSROOM *******************************************************************
-
-
 
 // 
 

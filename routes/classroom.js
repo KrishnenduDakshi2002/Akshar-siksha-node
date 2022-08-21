@@ -420,7 +420,7 @@ router.post('/create/test/:classroom_id',verify,async (req,res)=>{
         const test = new Test({
             topic: req.body.topic,
             subject: req.body.subject,
-            dateTime : moment(req.body.date).utc(true).toDate(),
+            dateTime : new Date(req.body.dateTime),
             questionPaper : req.body.questionPaper
         })
 

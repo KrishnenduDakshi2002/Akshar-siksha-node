@@ -343,10 +343,12 @@ margin-top: 21px;
 .card img {
   border-radius: 10px 10px 0 0;
   height: 133px;
+  margin-bottom: 1rem;
 }
 
 .card-container p{
   text-align: justify;
+  margin: 1rem 0;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -611,7 +613,7 @@ margin-top: 21px;
   }
   .card{
     width: 100%;
-    margin: 0 3rem;
+    margin: 3rem;
 
   }
 }

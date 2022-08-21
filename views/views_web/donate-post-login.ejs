@@ -109,6 +109,7 @@
         </div>
       </div>
     </nav>
+    
     <section class="section donate-section">
       <div class="container donate-container">
         <div class="heading">
@@ -123,26 +124,27 @@
         </div>
       </div>
       <div class="full-card-container">
-        <div class="card">
-          <img src="img_web/donate1.png" alt="Avatar" style="width: 100%" />
-          <div class="card-container">
-            <h4><b>Anil needs a Smartphone</b></h4>
-            <p>
-              This is Anil Kumar, from Madhubani Bihar. He was in 5th grade when
-              had to drop out from his school after the COVID-19 pandemic
-              outbreak . He wants to study further in online mode but doesn't
-              have a smart phone and cannot afford to buy one. Help him buy a
-              phone so that he can continue his studies and realise his dream of
-              becoming an IPS officer.
-            </p>
-            <div class="btn">
-              <a href="../paytmproject/index.html" class="button"
-                ><span>Donate</span></a
-              >
+        <% fund_info.forEach(fund =>{%>
+        
+          <!-- <p><%=fund.image%></p> -->
+          <div class="card">
+            <img src="file/<%=fund.image%>" alt="Avatar" style="width: 100%" />
+            <div class="card-container">
+              <h4><b><%=fund.problem_statement%></b></h4>
+              <p>
+                <%=fund.problem_description%>
+              </p>
+              <div class="btn">
+                <a href="../paytmproject/index.html" class="button"
+                  ><span>Donate</span></a
+                >
+              </div>
             </div>
           </div>
-        </div>
-        <div class="card">
+      
+       <%})%>
+        
+        <!-- <div class="card">
           <img src="img_web/donate2.png" alt="Avatar" style="width: 100%" />
           <div class="card-container">
             <h4><b>Help Rohit to continue studies</b></h4>
@@ -302,7 +304,7 @@
               >
             </div>
           </div>
-        </div>
+        </div> -->
 
         
       </div>

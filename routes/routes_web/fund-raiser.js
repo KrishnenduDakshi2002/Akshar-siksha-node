@@ -11,7 +11,7 @@ const fs = require("fs");
 
 const startFund = require("../../model/model_web/start-fundraiser");
 const { resourceLimits } = require("worker_threads");
-const startFundraiser = require("../../model/model_web/start-fundraiser");
+// const startFundraiser = require("../../model/model_web/start-fundraiser");
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -146,8 +146,17 @@ router.get("/fundraiser", async (req, res) => {
 
 // donation pages
 router.get("/donate", async (req, res) => {
-  res.render("donate-post-login.ejs");
+  const fundInfo = await startFund.find()
+
+  res.render("donate-post-login.ejs",{fund_info:fundInfo});
+
+  fundInfo.forEach(fund =>{
+    console.log(fund.cause)
+
+  })
+// console.log(fundll)
 });
+
 
 // demo
 router.get("/demo", async (req, res) => {
@@ -156,6 +165,7 @@ router.get("/demo", async (req, res) => {
   // })
   res.render("demo.ejs")
 });
+
 
 
 

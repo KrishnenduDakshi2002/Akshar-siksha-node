@@ -11,7 +11,6 @@ require('dotenv/config');
 // VERIFY TOKEN 
 const verify = require('../verifyToken');
 const { default: mongoose } = require('mongoose');
-const { NetworkAccessProfileNetworkContext } = require('twilio/lib/rest/supersim/v1/networkAccessProfile/networkAccessProfileNetwork');
 
 
 

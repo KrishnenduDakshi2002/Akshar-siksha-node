@@ -9,6 +9,8 @@ const Discussion = require('../model/Discussion');
 const Material = require('../model/Materials');
 const Test = require('../model/Test');
 
+const moment = require('moment');
+
 
 
 const jwt = require('jsonwebtoken');
@@ -51,10 +53,12 @@ router.post('/post/class/:classroom_id',verify, async (req,res)=>{
         } catch (error) {
             res.json({"ErrorMessage":error})
         }
+
     }else{
         res.json({"status":400});
     }
 })
+
 
 //// *************************************************************** CREATE CLASSROOM  *******************************************************************
 
@@ -312,13 +316,15 @@ router.get('/get/classroom/details/:classroom_id', async(req,res)=>{
     const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
     const classroom = await Classroom.findOne({_id:classroom_id});
 
-    var start = new Date();
-    start.setUTCHours(0,0,0,0); // this give the start of a day 
+    // var start = new Date();
+    // start.setUTCHours(0,0,0,0); // this give the start of a day 
 
-    var end = new Date();
-    end.setUTCHours(23,59,59,999);  // this give the end of a day
+    // var end = new Date();
+    // end.setUTCHours(23,59,59,999);  // this give the end of a day
 
-
+    var start = moment().startOf('day').utc(true).toDate();
+    var end = moment().endOf('day').utc(true).toDate();
+    
     const query = [
         {
             path : 'Classes',
@@ -370,7 +376,7 @@ router.get('/get/classroom/details/:classroom_id', async(req,res)=>{
 })
 
 
-//// *************************************************************** Getting materials  *******************************************************************
+//// *************************************************************** creating materials  *******************************************************************
 
 
 router.post('/post/materials/:classroom_id', verify,async(req,res)=>{
@@ -414,7 +420,7 @@ router.post('/create/test/:classroom_id',verify,async (req,res)=>{
         const test = new Test({
             topic: req.body.topic,
             subject: req.body.subject,
-            dateTime : new Date(req.body.date),
+            dateTime : moment(req.body.date).utc(true).toDate(),
             questionPaper : req.body.questionPaper
         })
 
@@ -461,13 +467,15 @@ router.get('/get/refresh/:refresh_mode/:classroom_id', async(req,res)=>{
     let populate_query ={};
     let select_query = "";
 
-    var start = new Date();
-    start.setUTCHours(0,0,0,0); // this give the start of a day 
+    var start = moment().startOf('day').utc(true).toDate();
+    var end = moment().endOf('day').utc(true).toDate();
 
-    var end = new Date();
-    end.setUTCHours(23,59,59,999);  // this give the end of a day
+    var date = moment('2022-08-20T15:00:46+05:30').utc(true).toDate();
 
-
+    console.log(start);
+    console.log(end);
+    console.log(date);
+    
     if(refresh_mode === 'today_class'){
         populate_query = {
             path : 'Classes',

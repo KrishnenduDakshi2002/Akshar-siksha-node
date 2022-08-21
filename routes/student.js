@@ -8,7 +8,6 @@ require('dotenv/config');
 
 // VERIFY TOKEN 
 const verify = require('../verifyToken');
-const { populate } = require('../model/User');
 
 router.get('/',verify, async (req,res)=>{
 

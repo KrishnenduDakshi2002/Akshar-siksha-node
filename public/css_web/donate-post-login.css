@@ -296,7 +296,6 @@ margin-top: 21px;
 
 
 
-
 .donate-container {
   padding-top: 65px;
 }
@@ -323,21 +322,31 @@ margin-top: 21px;
   justify-content: space-evenly;
   flex-wrap: wrap;
 }
+.full-card-container{
+  display: grid;
+  justify-items: center;
+  margin: 0 30px;
+  justify-content: space-between;
+  grid-template-columns: repeat(3,30%);
+}
 
 .card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+  width: 86%;
   display: table-cell;
-  width: 300px;
-  height: 425px;
   border-radius: 10px;
   margin-bottom: 40px;
   background: white;
 }
 .card img {
   border-radius: 10px 10px 0 0;
-  height: 275px;
+  height: 133px;
+}
+
+.card-container p{
+  text-align: justify;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -348,6 +357,14 @@ margin-top: 21px;
   padding: 2px 16px;
   position: relative;
 }
+.row3 .card{
+  height: 490px;
+}
+.row3 .card .btn{
+  top: 281px;
+}
+
+
 
 .see-more {
   display: flex;
@@ -394,6 +411,7 @@ margin-top: 21px;
 }
 
 .achievements-achievement-img {
+  opacity: 0.7;
   height: 100px;
   margin-bottom: 16px;
 }
@@ -414,15 +432,13 @@ margin-top: 21px;
 
 
 .btn {
-  width: 100%;
-  text-align: right;
+  justify-content: right;
   margin-top: 1.25rem;
+  margin-bottom: 2rem;
   border: 0;
-  /* display: flex;
-  justify-content: flex-end; */
-  position: absolute;
-  left: 186px;
-  top: 75px;
+  display: flex;
+  /* justify-content: flex-end; */
+
 }
 
 .btn a {
@@ -584,3 +600,27 @@ margin-top: 21px;
 }
 
 /*fundraiser footer end*/
+
+@media only screen and (max-width: 800px) {
+  .full-card-container{
+    display: grid;
+    /* justify-items: center; */
+    margin: 0 30px;
+    justify-content: none;
+    grid-template-columns: repeat(2,45%);
+  }
+  .card{
+    width: 100%;
+    margin: 0 3rem;
+
+  }
+}
+@media only screen and (max-width: 600px) {
+  .full-card-container{
+    display: grid;
+    justify-items: center;
+    margin: 0 30px;
+    justify-content: center;
+    grid-template-columns: repeat(1,70%);
+  }
+}

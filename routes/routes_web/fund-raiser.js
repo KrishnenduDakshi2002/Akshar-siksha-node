@@ -11,6 +11,7 @@ const fs = require("fs");
 
 const startFund = require("../../model/model_web/start-fundraiser");
 const { resourceLimits } = require("worker_threads");
+const startFundraiser = require("../../model/model_web/start-fundraiser");
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -47,7 +48,9 @@ const Storage =multer.diskStorage({
     cb(null, (path.join(__dirname, "../../public/img_fund")))
   },
   filename:(req,file,cb) => {
-    cb(null,Date.now() + path.extname(file.originalname))
+    var FILEname = file.originalname.substring(0, file.originalname.length - 4) 
+  
+    cb(null,Date.now() + "--" + FILEname + path.extname(file.originalname))
   },
 })
 
@@ -71,29 +74,33 @@ router.get("/start-funding", async (req, res) => {
 
 router.post("/start-funding",upload,async (req, res) => {
 //  storing data in tempary schema
+console.log("hello 1")
 
-  const formData = new formidable.IncomingForm()
-  formData.parse(req, function(error,fields,files){
-    const extension = files.file.name.substr(files.filename.name.lastIndexOf("."))
-    const newPath = "file" + extension
-    fs.rename(files.file.path, newPath, function(errorRename){
-      result.send("File saved")
-    })
-    console.log(newPath,"hello")
-    console.log(extension,"bye")
+  // const formData = new formidable.IncomingForm()
+  // formData.parse(req, function(error,fields,files){
+  //   const extension = files.file.name.substr(files.filename.name.lastIndexOf("."))
+  //   const newPath = "file" + extension
+  //   console.log("hello 2")
+  //   fs.rename(files.file.path, newPath, function(errorRename){
+  //     result.send("File saved")
+  //     console.log("hello 3")
+
+  //   })
+  //   console.log(newPath,"hello")
+  //   console.log(extension,"bye")
 
 
   
-  })
+  // })
   
 
 
-console.log(req.file,"fafffffffffff")
+console.log(req.file.filename,"fafffffffffff")
 // res.send("lets see")
     // upload(req,res,(err)=>{
-    //   if(err){
-    //     console.log(err)
-    //   } else{
+      // if(err){
+      //   console.log(err)
+      // } else{
         const user_ = new startFund({
           cause: req.body.cause,
           name: req.body.name,
@@ -102,10 +109,10 @@ console.log(req.file,"fafffffffffff")
             problem_statement: req.body.prob_statement,
             problem_description: req.body.prob_description,
             Amount: req.body.target_amount,
-            image: req.file.originalname,
+            image: req.file.filename,
           });
           user_.save()
-    //   }
+      // }
     // })
     
     console.log(req.body,"hhhhhhhhhhhhhh")
@@ -136,5 +143,20 @@ router.get("/main-page", async (req, res) => {
 router.get("/fundraiser", async (req, res) => {
   res.render("fundraiser-home.ejs");
 });
+
+// donation pages
+router.get("/donate", async (req, res) => {
+  res.render("donate-post-login.ejs");
+});
+
+// demo
+router.get("/demo", async (req, res) => {
+  // startFundraiser.find({},function(funds){
+  //   res.render("demo.ejs",{FundList:startFundraiser});
+  // })
+  res.render("demo.ejs")
+});
+
+
 
 module.exports = router;

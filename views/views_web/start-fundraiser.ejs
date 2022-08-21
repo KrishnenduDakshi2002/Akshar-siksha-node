@@ -33,7 +33,7 @@
         <p class="nav-text">Start a fundraiser</p>
       </div>
     </nav>
-    <form method="post" action="/fund/start-funding" id="start-fund-form" class="middle-container"   >
+    <form method="post" action="/fund/start-funding" id="start-fund-form" class="middle-container"  enctype="multipart/form-data"  >
 
     
       <p class="fund-purpose">
@@ -134,10 +134,10 @@
           <span></span>
           <label>Target amount (in Rs.)</label>
         </div>
-        <form action="/fund/start-funding" style="display: flex; align-items : center;" enctype="multipart/form-data">
+       
           <label for="uploaded-file" style="color: #adadad;">Upload relevant documents regarding problem:</label>
           <input type="file" name="uploaded_file" id="uploaded-file" multiple style="color: #adadad;">
-        </form>
+
       
       <div class="submit-button">
         <!-- <a href="#"> -->
@@ -149,7 +149,7 @@
             style="cursor: pointer"
           />
         </div>
-    </form>
+      </form>
         <!-- </a> -->
       </div>
     </div>

@@ -48,7 +48,6 @@ passport.use(
       //   gender: req.body.gender,
       // });
       // user_.save()
-      console.log(email);
       return done(null, profile);
     }
   )
@@ -101,7 +100,7 @@ router.get("/good", async (req, res) => {
 router.get(
   "/google",
   passport.authenticate("google", {
-    scope: ["profile","email"]
+    scope: ["profile"]
   })
 );
 

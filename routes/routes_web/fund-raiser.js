@@ -4,9 +4,13 @@ const mongoose = require("mongoose");
 const router = express.Router();
 const path = require("path");
 const multer = require("multer")
+const app = express();
+const http = require("http").createServer(app);
+const formidable = require("formidable");
+const fs = require("fs");
 
 const startFund = require("../../model/model_web/start-fundraiser");
-const app = express();
+const { resourceLimits } = require("worker_threads");
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -17,20 +21,6 @@ const uri =
 const db = mongoose.connect(uri);
 const con = mongoose.connection;
 
-// disk storage
-const Storage =multer.diskStorage({
-  destination:(req,file,cb)=>{
-    cb(null, "../../public/img_fund")
-  },
-  filename:(req,file,cb) => {
-    cb(null,Date.now() + path.extname(file.originalname))
-  },
-})
-
-
-const upload =multer({
-  storage:Storage
-}).single("uploaded_file")
 
 // static files
 router.use(
@@ -45,6 +35,26 @@ router.use(
   "/img_web",
   express.static(path.join(__dirname, "../../public/img_web"))
 );
+router.use(
+  "/file",
+  express.static(path.join(__dirname, "../../public/img_fund"))
+);
+console.log(path.join(__dirname, "../../public/img_fund"))
+
+// disk storage
+const Storage =multer.diskStorage({
+  destination:(req,file,cb)=>{
+    cb(null, (path.join(__dirname, "../../public/img_fund")))
+  },
+  filename:(req,file,cb) => {
+    cb(null,Date.now() + path.extname(file.originalname))
+  },
+})
+
+const upload =multer({
+  storage:Storage
+}).single("uploaded_file")
+
 
 // Set views for website
 
@@ -61,12 +71,29 @@ router.get("/start-funding", async (req, res) => {
 
 router.post("/start-funding",upload,async (req, res) => {
 //  storing data in tempary schema
+
+  const formData = new formidable.IncomingForm()
+  formData.parse(req, function(error,fields,files){
+    const extension = files.file.name.substr(files.filename.name.lastIndexOf("."))
+    const newPath = "file" + extension
+    fs.rename(files.file.path, newPath, function(errorRename){
+      result.send("File saved")
+    })
+    console.log(newPath,"hello")
+    console.log(extension,"bye")
+
+
+  
+  })
+  
+
+
 console.log(req.file,"fafffffffffff")
-res.send("lets see")
-    upload(req,res,(err)=>{
-      if(err){
-        console.log(err)
-      } else{
+// res.send("lets see")
+    // upload(req,res,(err)=>{
+    //   if(err){
+    //     console.log(err)
+    //   } else{
         const user_ = new startFund({
           cause: req.body.cause,
           name: req.body.name,
@@ -75,21 +102,16 @@ res.send("lets see")
             problem_statement: req.body.prob_statement,
             problem_description: req.body.prob_description,
             Amount: req.body.target_amount,
-            image: req.body.uploaded_file,
+            image: req.file.originalname,
           });
-          // user_.save()
-      }
-    })
+          user_.save()
+    //   }
+    // })
     
     console.log(req.body,"hhhhhhhhhhhhhh")
-    //   checking input data
-    // const namecheck = await register.find({ userName: req.body.username });
-  
-    // const emailcheck = await register.find({ email: req.body.email });
-  
-    // const phonecheck = await register.find({ phone_no: req.body.phone_no });
-  
-    
+    // const donate = await startFund.find()
+    // console.log(donate) 
+    // 
   
 });
   

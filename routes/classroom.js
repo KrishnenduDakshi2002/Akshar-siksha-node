@@ -414,9 +414,9 @@ router.post('/post/materials/:classroom_id', verify,async(req,res)=>{
 
 router.post('/create/test/:classroom_id',verify,async (req,res)=>{
     const teacher_id = req.user._id;
+    const teacher = await Teacher.findOne({Teacher_id : mongoose.Types.ObjectId(teacher_id)});
     const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
-    const classroom = await Classroom.findOne({_id: classroom_id, Teachers : teacher_id});
-
+    const classroom = await Classroom.findOne({_id: classroom_id, Teachers : [teacher._id]});
 
     if(classroom){
         try {

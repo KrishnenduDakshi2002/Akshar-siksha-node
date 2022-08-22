@@ -417,9 +417,9 @@ router.post('/create/test/:classroom_id',verify,async (req,res)=>{
     const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
     const classroom = await Classroom.findOne({_id: classroom_id, Teachers : teacher_id});
 
-    try {
 
-        if(classroom){
+    if(classroom){
+        try {
             const test = new Test({
                 topic: req.body.topic,
                 subject: req.body.subject,
@@ -446,15 +446,15 @@ router.post('/create/test/:classroom_id',verify,async (req,res)=>{
                 }
             )
             res.json({"status":201,"test_id":newTest._id.valueOf()});
-        
-        }else{
-            res.json({"ErrorMessage":"Classroom or Teacher doesn't exists"})
+            
+        } catch (error) {
+            res.json({"ErrorMessage":error})
         }
-        
-    } catch (error) {
-      res.json(error);   
-    }
     
+    }else{
+        res.json({"ErrorMessage":"Classroom or Teacher doesn't exists"})
+    }
+        
     
 })
 

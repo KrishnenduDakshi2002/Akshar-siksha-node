@@ -417,37 +417,44 @@ router.post('/create/test/:classroom_id',verify,async (req,res)=>{
     const classroom_id = mongoose.Types.ObjectId(req.params.classroom_id);
     const classroom = await Classroom.findOne({_id: classroom_id, Teachers : teacher_id});
 
-    if(classroom){
-        const test = new Test({
-            topic: req.body.topic,
-            subject: req.body.subject,
-            dateTime : new Date(req.body.dateTime),
-            questionPaper : req.body.questionPaper
-        })
+    try {
 
-        const newTest = await test.save();
-
-        // lets add the test id to all the student's test array who are enrolled in this classroom
-        await Student.updateMany({Classrooms : classroom_id},{
-            $addToSet :{
-                Tests : newTest._id
-            }
-        })
-
-        // also adding this test to the teacher's test array so he/she can check the student's answersheet
-        await Teacher.findOneAndUpdate(
-            {Teacher_id : teacher_id},
-            {
+        if(classroom){
+            const test = new Test({
+                topic: req.body.topic,
+                subject: req.body.subject,
+                dateTime : new Date(req.body.dateTime),
+                questionPaper : req.body.questionPaper
+            })
+    
+            const newTest = await test.save();
+    
+            // lets add the test id to all the student's test array who are enrolled in this classroom
+            await Student.updateMany({Classrooms : classroom_id},{
                 $addToSet :{
                     Tests : newTest._id
                 }
-            }
-        )
-        res.json({"status":201,"test_id":newTest._id.valueOf()});
+            })
     
-    }else{
-        res.json({"ErrorMessage":"Classroom or Teacher doesn't exists"})
+            // also adding this test to the teacher's test array so he/she can check the student's answersheet
+            await Teacher.findOneAndUpdate(
+                {Teacher_id : teacher_id},
+                {
+                    $addToSet :{
+                        Tests : newTest._id
+                    }
+                }
+            )
+            res.json({"status":201,"test_id":newTest._id.valueOf()});
+        
+        }else{
+            res.json({"ErrorMessage":"Classroom or Teacher doesn't exists"})
+        }
+        
+    } catch (error) {
+      res.json(error);   
     }
+    
     
 })
 

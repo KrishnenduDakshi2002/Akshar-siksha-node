@@ -13,7 +13,8 @@ const TestSchema = mongoose.Schema({
     answerSheet : [
         {
             student_id : String,  // we are taking the id of a student so he/she can't push another answer
-            answer: String   // link of the answersheet for the respective student
+            fileName : String,
+            answerSheetLink: String   // link of the answersheet for the respective student
         }
     ]  // student's answersheet links will be stored in this array
 

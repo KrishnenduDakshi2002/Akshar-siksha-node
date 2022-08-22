@@ -20,6 +20,7 @@ const verify = require('../verifyToken');
 const { default: mongoose } = require('mongoose');
 
 
+
 require('dotenv/config');
 
 
@@ -442,13 +443,49 @@ router.post('/create/test/:classroom_id',verify,async (req,res)=>{
                 }
             }
         )
-
         res.json({"status":201,"test_id":newTest._id.valueOf()});
     
     }else{
         res.json({"ErrorMessage":"Classroom or Teacher doesn't exists"})
     }
     
+})
+
+
+
+//// *************************************************************** uploading answers *******************************************************************
+
+router.post('/upload/answer_sheet/:test_id',verify,async (req,res)=>{
+    const student_id = (req.user._id);
+    const test_id = mongoose.Types.ObjectId(req.params.test_id);
+    const answerExists  = await Test.findOne({_id: test_id, answerSheet : {
+        $elemMatch : {
+            student_id : student_id
+        }
+    } })
+    try {
+
+        if(answerExists){
+            res.json({"status":200,"message":"Answersheet has been uploaded already!"});
+        }else{
+
+            await Test.findByIdAndUpdate(test_id,
+                {
+                    $addToSet : {
+                        answerSheet : {
+                            student_id : student_id,
+                            fileName : req.body.fileName,
+                            answerSheetLink : req.body.link
+                        }
+                    }
+                })
+            
+            res.json({"status":201});
+        }
+        
+    } catch (error) {
+        res.json({"errorMessage":error});
+    }
 })
 
 

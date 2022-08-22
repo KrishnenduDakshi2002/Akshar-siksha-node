@@ -6,6 +6,7 @@ const cookieSession = require("cookie-session");
 const { session } = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const app = express();
+const register = require("../../model/model_web/registration");
 
 
 // main function
@@ -15,9 +16,9 @@ passport.use(new FacebookStrategy({
     callbackURL: "http://localhost:3000/login/facebook/callback"
   },
   function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+    // register.findOrCreate({ facebookId: profile.id }, function (err, user) {
       return done(null, user);
-    });
+    // });
   }
 ))
 
@@ -49,7 +50,7 @@ router.get("/good",async (req, res) => {
   res.redirect("/user/home-page");
 });
 
-router.get("/facebook", passport.authenticate("facebook", { scope: ["profile"] }));
+router.get("/facebook", passport.authenticate("facebook", { }));
 
 router.get(
   "/facebook/callback",

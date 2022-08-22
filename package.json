@@ -36,7 +36,9 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-google-oauth20": "^2.0.0",
     "passport-twitter": "^1.0.4",
+    "razorpay": "^2.8.3",
     "react-native-email": "^2.1.0",
+    "stripe": "^10.3.0",
     "twilio": "^3.80.0"
   }
 }

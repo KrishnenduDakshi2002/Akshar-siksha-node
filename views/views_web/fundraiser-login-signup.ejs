@@ -20,7 +20,7 @@
     />
 
     <!--<title>Login & Registration Form</title>-->
-    <link rel="icon" href="img_web/favicon.ico">
+    <link rel="icon" href="img_web/favicon.ico" />
   </head>
   <body>
     <div class="container">
@@ -28,13 +28,19 @@
         <div class="form login">
           <span class="title">Login</span>
 
-          <form action="#">
+          <form action="/fund/login-signup" method="post">
             <div class="input-field">
-              <input type="text" placeholder="Enter your email" required />
+              <input
+                type="text"
+                name="email_login"
+                placeholder="Enter your email"
+                required
+              />
               <i class="uil uil-envelope icon"></i>
             </div>
             <div class="input-field">
               <input
+                name="password_login"
                 type="password"
                 class="password"
                 placeholder="Enter your password"
@@ -53,11 +59,11 @@
               <a href="#" class="text">Forgot password?</a>
             </div>
 
-            <a href="fundraiser-home-post-login.html">
-              <div class="input-field button">
-                <input type="button" value="Login" />
-              </div>
-            </a>
+            <!-- <a href="fundraiser-home-post-login.html"> -->
+            <div class="input-field button">
+              <input type="submit" value="Login" />
+            </div>
+            <!-- </a> -->
             <div class="or-line">
               <hr class="underline" />
               <div class="or">or</div>
@@ -95,19 +101,30 @@
         <div class="form signup">
           <span class="title">Signup</span>
 
-          <form action="#">
+          <form action="/fund/login-signup" method="post">
             <div class="input-field-1">
-              <input type="text" placeholder="Enter your name" required />
+              <input
+                type="text"
+                name="signup_name"
+                placeholder="Enter your name"
+                required
+              />
               <i class="uil uil-user"></i>
             </div>
             <div class="input-field-1">
-              <input type="text" placeholder="Enter your email" required />
+              <input
+                type="text"
+                name="signup_email"
+                placeholder="Enter your email"
+                required
+              />
               <i class="uil uil-envelope icon"></i>
             </div>
             <div class="input-field-1">
               <input
                 type="password"
                 class="password"
+                name="signup_password"
                 placeholder="Create a password"
                 required
               />
@@ -117,6 +134,7 @@
               <input
                 type="password"
                 class="password"
+                name="signup_conf_password"
                 placeholder="Confirm a password"
                 required
               />
@@ -126,18 +144,18 @@
 
             <div class="checkbox-text">
               <div class="checkbox-content">
-                <input type="checkbox" id="termCon" />
+                <input type="checkbox" name="checkbox" id="termCon" />
                 <label for="termCon" class="text terms"
                   >I accepted all terms and conditions</label
                 >
               </div>
             </div>
 
-            <a href="fundraiser-home-post-login.html">
-              <div class="input-field-1 button">
-                <input type="button" value="Signup" />
-              </div>
-            </a>
+            <!-- <a href="fundraiser-home-post-login.html"> -->
+            <div class="input-field-1 button">
+              <input type="submit" value="Signup" />
+            </div>
+            <!-- </a> -->
             <div class="or-line">
               <hr class="underline" />
               <div class="or">or</div>
@@ -166,7 +184,7 @@
           <div class="login-signup">
             <span class="text"
               >Already have an account?
-              <a href="/user/login" class="text login-link">Login Now</a>
+              <a href="#" class="text login-link">Login Now</a>
             </span>
           </div>
         </div>

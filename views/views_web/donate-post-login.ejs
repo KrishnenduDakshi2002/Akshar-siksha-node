@@ -23,7 +23,7 @@
               src="img_web/Akshar_logo_white.png"
               alt="nav-logo"
             />
-            <a href="landing-home.html"
+            <a href="/home"
               ><h1 class="landing-nav-heading">अAKSHAR</h1></a
             >
           </div>
@@ -36,17 +36,17 @@
               >
             </li>
             <li>
-              <a href="donate-post-login.html" class="landing-nav-list-items"
+              <a href="/fund/donate" class="landing-nav-list-items"
                 >Donate</a
               >
             </li>
             <li>
-              <a href="contact.html" class="landing-nav-list-items"
+              <a href="/contact" class="landing-nav-list-items"
                 >Contact us</a
               >
             </li>
             <li class="landing-nav-login-btn">
-              <a href="fundraiser-home.html">
+              <a href="/fund/fundraiser">
                 <button class="landing-nav-btn">
                   Logout
                   <span class="landing-nav-login-icon"
@@ -85,18 +85,18 @@
             </li>
             <li>
               <a
-                href="donate-post-login.html"
+                href="/fund/donate"
                 class="landing-nav-bottom-list-items"
                 >Donate</a
               >
             </li>
             <li>
-              <a href="contact.html" class="landing-nav-bottom-list-items"
+              <a href="/contact" class="landing-nav-bottom-list-items"
                 >Contact us</a
               >
             </li>
             <li>
-              <a href="fundraiser-home.html">
+              <a href="/fund/fundraiser">
                 <button class="landing-nav-btn">
                   Logout
                   <span class="landing-nav-login-icon"
@@ -123,6 +123,7 @@
           />
         </div>
       </div>
+      <div class="whole-card-boy">
       <div class="full-card-container">
         <% fund_info.forEach(fund =>{%>
         
@@ -135,7 +136,7 @@
                 <%=fund.problem_description%>
               </p>
               <div class="btn">
-                <a href="../paytmproject/index.html" class="button"
+                <a href="/fund/donate-option/<%=fund.problem_statement%>" class="button"
                   ><span>Donate</span></a
                 >
               </div>
@@ -308,6 +309,7 @@
 
         
       </div>
+    </div>
       <div class="container achievements-container">
         <div class="achievements-left">
           <h2 class="achievements-secondary-heading">Feel Free To Donate</h2>
@@ -395,10 +397,10 @@
                   <a href="fundraiser-home-post-login.html">Home</a>
                 </li>
                 <li class="fundraiser-footer-lists">
-                  <a href="donate-post-login.html">Donate</a>
+                  <a href="/fund/donate">Donate</a>
                 </li>
                 <li class="fundraiser-footer-lists">
-                  <a href="contact.html">Contact us</a>
+                  <a href="/contact">Contact us</a>
                 </li>
               </ul>
             </div>

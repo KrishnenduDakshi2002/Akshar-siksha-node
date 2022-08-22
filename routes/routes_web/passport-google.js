@@ -37,7 +37,7 @@ passport.use(
       callbackURL: "http://localhost:3000/login/google/callback",
     },
     function (request, accessToken, refreshToken, profile, done) {
-      console.log(profile);
+      console.log(profile.name);
       // const user_ = new register({
       //   fullName: profile.name,
       //   // userName: req.body.username,

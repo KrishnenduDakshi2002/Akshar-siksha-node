@@ -8,10 +8,16 @@ const app = express();
 const http = require("http").createServer(app);
 const formidable = require("formidable");
 const fs = require("fs");
+const Razorpay = require("razorpay")
+// const stripe =require("stripe")("secret_key")
+const domain ="http://localhost:3000"
+var instance = new Razorpay({ key_id: 'rzp_test_WxRaJpBIMBim6H', key_secret: '64L2zfnhaDQTE4kexFju1OPG' })
+
 
 const startFund = require("../../model/model_web/start-fundraiser");
 const { resourceLimits } = require("worker_threads");
-// const startFundraiser = require("../../model/model_web/start-fundraiser");
+const donarInfo = require("../../model/model_web/donate");
+const donarRazorpay = require("../../model/model_web/donate-razorpay");
 
 router.use(express.urlencoded({ extended: true }));
 router.use(express.json());
@@ -96,11 +102,7 @@ console.log("hello 1")
 
 
 console.log(req.file.filename,"fafffffffffff")
-// res.send("lets see")
-    // upload(req,res,(err)=>{
-      // if(err){
-      //   console.log(err)
-      // } else{
+
         const user_ = new startFund({
           cause: req.body.cause,
           name: req.body.name,
@@ -116,9 +118,6 @@ console.log(req.file.filename,"fafffffffffff")
     // })
     
     console.log(req.body,"hhhhhhhhhhhhhh")
-    // const donate = await startFund.find()
-    // console.log(donate) 
-    // 
   
 });
   
@@ -150,21 +149,126 @@ router.get("/donate", async (req, res) => {
 
   res.render("donate-post-login.ejs",{fund_info:fundInfo});
 
-  fundInfo.forEach(fund =>{
-    console.log(fund.cause)
+});
 
-  })
-// console.log(fundll)
+// router.post("/razor-pay", async (req, res) => {
+//   res.send("hi");
+//   instance.orders.create({
+//     amount: 50000,
+//     currency: "INR",
+//     receipt: "receipt#1",
+//     notes: {
+//       key1: "value3",
+//       key2: "value2"
+//     }
+//   })
+// });
+
+
+router.get("/donate-home", async (req, res) => {
+  res.render("donate.ejs");
+});
+
+router.get("/login-signup", async (req, res) => {
+  res.render("fundraiser-login-signup.ejs");
+});
+
+router.post("/login-signup", async (req, res) => {
+  console.log(req.body)
+  res.send("hello");
+});
+
+router.post("/payment-gateway", async (req, res) => {
+  console.log(req.body)
+  res.send("hello");
 });
 
 
 // demo
-router.get("/demo", async (req, res) => {
+router.get("/donate-option/:id", async (req, res) => {
   // startFundraiser.find({},function(funds){
   //   res.render("demo.ejs",{FundList:startFundraiser});
   // })
-  res.render("demo.ejs")
+  console.log(req.params.id)
+  // const fundInfo = await startFund.find()
+  res.render("razorpay-payment.ejs",{fund_info:req.params.id})
 });
+
+
+router.get("/payment", async (req, res) => {
+  var options = {
+    amount: "500",  // amount in the smallest currency unit
+    currency: "INR",
+    receipt: "order_rcptid_11"
+  };
+  var orderID= "hi"
+  console.log(options,"ji")
+  instance.orders.create(options, async function(err, order) {
+    console.log(order);
+    orderID=order.id
+    const user_ = new donarRazorpay({
+      order_id: orderID
+    }) 
+    var allOrders = await instance.orders.all()
+    Element = allOrders[1]
+    console.log(allOrders,"ffffffffffffffffffffffff")
+    console.log(Element,"ffffffffffffffffffffffff")
+
+     
+  });
+  
+  res.render("razorpay-pay-option.ejs",{name:"order_K8eosnWJFtmwzz"})
+});
+
+
+router.post("/donate-option/:id", async (req, res) => {
+  console.log(req.params.id,"jlllll")
+  // const fundInfo = await startFund.find({problem_statement : req.params.id})
+  const user_ = new donarRazorpay({
+    cause:req.params.id,
+    name: req.body.name,
+      email: req.body.email,
+      phone: req.body.phone,
+      
+      amount: req.body.amount,
+    
+    });
+    console.log(user_)
+    res.redirect("/fund/payment")
+})
+
+router.post("/payment", async (req, res) => {
+  
+  var options = {
+    amount: req.body.amount*100,  // amount in the smallest currency unit
+    currency: "INR",
+    receipt: "order_rcptid_11"
+  };
+  var orderID= "hi"
+  console.log(options)
+  instance.orders.create(options, function(err, order) {
+    console.log(order);
+    orderID=order.id
+    console.log(orderID,"ffffffffffffffffffffffff")
+    res.send({orderId:orderID,amount:options.amount}) 
+  });
+
+  
+  
+
+  // instance.orders.create(options, function(err, order) {
+  //   console.log(order);
+  // });
+  console.log(req.body)  
+  console.log(orderID)  
+
+
+});
+
+
+
+
+
 
 
 

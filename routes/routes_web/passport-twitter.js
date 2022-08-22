@@ -1,6 +1,6 @@
-const passport = require("passport");
 const express = require("express");
 const session = require('express-session');
+const passport = require("passport");
 const router = express.Router();
 const cookieSession = require("cookie-session");
 const TwitterStrategy = require("passport-twitter").Strategy;
@@ -12,7 +12,12 @@ const AccessToken = require("twilio/lib/jwt/AccessToken");
 // later on
 
 
-//  main function
+// function(accessToken, refreshToken, profile, done) {
+//     User.findOrCreate({ googleId: profile.id }, function (err, user) {
+//       return done(err, user);
+//     });
+//   }
+// ));
 passport.use(
   new TwitterStrategy(
     {
@@ -27,16 +32,25 @@ passport.use(
   )
 );
 
-// function(accessToken, refreshToken, profile, done) {
-//     User.findOrCreate({ googleId: profile.id }, function (err, user) {
-//       return done(err, user);
-//     });
-//   }
-// ));
-
 // google auth
 // middlewares
 // After you declare "app"
+passport.serializeUser(function (user, done) {
+  process.nextTick(function () {
+    return done(null, {
+      // id: user.id,
+      // username: user.username,
+      // picture: user.picture
+    });
+  });
+});
+
+passport.deserializeUser(function (user, done) {
+  process.nextTick(function () {
+    return done(null, user);
+  });
+});
+
 app.use(
   cookieSession({
     name: "session",
@@ -53,32 +67,19 @@ const isLoggedIn = (req, res, next) => {
   }
 };
 
-// expressSession = require("express-session")
 
-// app.use(expressSession({
-//     secret: "strategyOptions.session.secret",
-//     resave: false,
-//     saveUninitialized: true
-// }));
+app.use(session({
+    secret: "strategyOptions.session.secret",
+    resave: true,
+    saveUninitialized: true
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser(function (user, done) {
-  process.nextTick(function () {
-    return done(null, {
-      // id: user.id,
-      // username: user.username,
-      // picture: user.picture
-    });
-  });
-});
 
-passport.deserializeUser(function (user, done) {
-  process.nextTick(function () {
-    return done(null, user);
-  });
-});
+//  main function
+
 
 // routes
 router.get("/failed", async (req, res) => {

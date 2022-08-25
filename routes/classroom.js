@@ -55,6 +55,7 @@ router.post('/post/class/:classroom_id',verify, async (req,res)=>{
             res.json({"ErrorMessage":error})
         }
 
+        res.json({'status':201,'class_id':newClass._id.valueOf()});
     }else{
         res.json({"status":400});
     }

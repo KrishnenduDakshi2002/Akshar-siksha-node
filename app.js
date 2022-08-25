@@ -22,6 +22,14 @@ const DashBoard_route = require('./routes/DashBoard');
 
 const classroom_route = require('./routes/classroom');
 
+// categories route
+const categories_route = require('./routes/Categories');
+
+// contribution route
+
+const contribution_route = require('./routes/Contributions');
+
+
 
 
 
@@ -56,6 +64,8 @@ app.use('/api/user',authRoute);
 app.use('/user/reset_password_page',reset_pass_page_route);
 app.use('/api/data/get/user/dashboard',DashBoard_route);
 app.use('/api/data/classroom',classroom_route);
+app.use('/api/data/categories', categories_route);
+app.use('/contribution',contribution_route);
 
 // serving static files
 // servering images

@@ -8,7 +8,8 @@ const ClassSchema = mongoose.Schema({
     dateTime: {
         type: Date,
         default : moment().utc(true).toDate()   // this will store the local time ( as date obj)
-    }
+    },
+    classLink : String  // it can be a meet link or firebase video url
 })
 
 

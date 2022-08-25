@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema({
     },
     role:{
         type:String,
-        required: true,
+        // required: true,
     },
     email:{
         type:String,
-        required: true,
+        // required: true,
         max:255,
         min:10
     },
@@ -36,19 +36,19 @@ const userSchema = new mongoose.Schema({
     },
     address:{
         type:String,
-        required: true,
+        // required: true,
         max:2,
         max:1024
     },
     institute:{
         type:String,
-        required: true,
+        // required: true,
         max:5,
         max:255
     },
     institute_code:{
         type:String,
-        required: true,
+        // required: true,
         max:3,
         max:255
     },
@@ -57,6 +57,10 @@ const userSchema = new mongoose.Schema({
         required: true,
         max:2000,
         min:6
+    },
+    location :{
+        lat : String,
+        lng : String
     },
     date_created:{
         type:Date,
